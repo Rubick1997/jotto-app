@@ -1,6 +1,6 @@
 import React from "react";
 import { CongratsType } from "./types";
-
+import {Chip} from "@material-ui/core"
 
 
 function Congrats({ success }: CongratsType) {
@@ -8,7 +8,7 @@ function Congrats({ success }: CongratsType) {
     return (
       <div data-test="component-congrats">
         <span data-test="congrats-message">
-          Congratulations! You guessed the world!
+        <Chip label="Congratulations! You guessed the world!" color="primary" style={{backgroundColor:'green'}}  />
         </span>
       </div>
     );
