@@ -1,3 +1,7 @@
-export type CongratsType = {
-    success?: boolean;
-  };
+export interface CongratsType {
+  success?: boolean;
+}
+
+export interface GuessedWordsType {
+  guessedWords:{ guessedWord: string; letterMatchCount: number }[];
+}
