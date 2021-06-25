@@ -1,6 +1,6 @@
 import React from "react";
 import { GuessedWordsType } from "./types";
-import { withStyles, Theme, createStyles} from '@material-ui/core/styles';
+import { withStyles, Theme, createStyles } from "@material-ui/core/styles";
 import {
   TableContainer,
   Paper,
@@ -10,19 +10,17 @@ import {
   TableCell,
 } from "@material-ui/core";
 
-
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
     head: {
-      backgroundColor: theme.palette.common.black,
+      backgroundColor: theme.palette.info.main,
       color: theme.palette.common.white,
     },
     body: {
       fontSize: 14,
     },
-  }),
+  })
 )(TableCell);
-
 
 function GuessedWords(props: GuessedWordsType) {
   const guessedWordsRows = props.guessedWords.map((word, index) => (

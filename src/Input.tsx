@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
+import { InputType } from "./types";
 
-function Input(props: { secretWord?: string }) {
+function Input({
+  success,
+  secretWord,
+}: InputType) {
   const [currentGuess, setCurrentGuess] = React.useState("");
+
+  if (success) {
+    return <div data-test="component-input" />;
+  }
 
   return (
     <div data-test="component-input">
