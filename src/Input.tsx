@@ -13,7 +13,15 @@ function Input(props: { secretWord?: string }) {
           value={currentGuess}
           onChange={(event) => setCurrentGuess(event.target.value)}
         />
-        <Button data-test="submit-button" variant="contained" color="primary">
+        <Button
+          data-test="submit-button"
+          variant="contained"
+          color="primary"
+          onClick={(event) => {
+            event.preventDefault();
+            setCurrentGuess("");
+          }}
+        >
           Primary
         </Button>
       </form>
