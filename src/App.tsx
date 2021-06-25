@@ -8,7 +8,7 @@ function App() {
   return (
     <Container>
       <h1>Jotto</h1>
-      <Congrats success={true} />
+      <Congrats success={false} />
       <GuessedWords
         guessedWords={[{ guessedWord: "potter", letterMatchCount: 3 }]}
       />
