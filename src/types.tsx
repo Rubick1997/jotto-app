@@ -1,4 +1,3 @@
-import {ShallowWrapper, ReactWrapper} from 'enzyme';
 
 export interface CongratsType {
   success?: boolean;

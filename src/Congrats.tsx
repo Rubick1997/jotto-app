@@ -6,12 +6,12 @@ function Congrats({ success }: CongratsType) {
   if (success) {
     return (
       <div data-test="component-congrats">
-        <span data-test="congrats-message">
+        <span>
           <Chip
+            data-test="congrats-message"
             label="Congratulations! You guessed the world!"
             style={{ backgroundColor: "green" }}
           />
-          Congratulations! You guessed the world!
         </span>
       </div>
     );

@@ -1,9 +1,10 @@
-import { shallow } from "enzyme";
 import { findByTestAttr } from "../test/testUtils";
 import Congrats from "./Congrats";
 import { CongratsType } from "./types";
+import { createShallow } from "@material-ui/core/test-utils";
 
 const setup = (props?: CongratsType) => {
+  let shallow = createShallow();
   return shallow(<Congrats {...props} />);
 };
 
@@ -21,6 +22,6 @@ test("renders no text when 'success' props is false", () => {
 
 test("renders non-empty congrats when 'success' props is true", () => {
   const wrapper = setup({ success: true });
-  const message = findByTestAttr(wrapper, "congrats-message");
-  expect(message.text().length).not.toBe(0);
+   const message = expect(wrapper.find('chip'))
+  expect(message).not.toBe(0);
 });
