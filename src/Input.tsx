@@ -30,7 +30,7 @@ function Input({
             setCurrentGuess("");
           }}
         >
-          Primary
+          Search
         </Button>
       </form>
     </div>
