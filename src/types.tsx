@@ -8,6 +8,5 @@ export interface GuessedWordsType {
 }
 
 export interface InputType {
-  success: boolean;
   secretWord: string;
 }

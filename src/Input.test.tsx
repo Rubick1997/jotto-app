@@ -1,6 +1,8 @@
 import React, { ComponentState } from "react";
-import { shallow, ShallowWrapper } from "enzyme";
-import { findByTestAttr } from "../test/testUtils";
+import { mount, ReactWrapper } from "enzyme";
+import { findByTestAttr, storeFactory } from "../test/testUtils";
+import { Provider } from "react-redux";
+
 import Input from "./Input";
 
 //if we want to use useState insea of React.useState
@@ -10,15 +12,20 @@ import Input from "./Input";
 //   useState:(initialState:string)=>[initialState,mockSetCurrentGuess]
 // }));
 
-const setup = (success = false, secretWord = "party") => {
-  return shallow(<Input success={success} secretWord={secretWord} />);
+const setup = (initialState = {}, secretWord = "party") => {
+  const store = storeFactory(initialState);
+  return mount(
+    <Provider store={store}>
+      <Input secretWord={secretWord} />
+    </Provider>
+  );
 };
 
 describe("render", () => {
-  describe("success is true", () => {
-    let wrapper: ShallowWrapper;
+  describe("success is false", () => {
+    let wrapper: ReactWrapper;
     beforeEach(() => {
-      wrapper = setup(true);
+      wrapper = setup({ success: false });
     });
 
     test("renders without error", () => {
@@ -28,21 +35,19 @@ describe("render", () => {
 
     test("input box does not show", () => {
       const inputBox = findByTestAttr(wrapper, "input-box");
-      expect(inputBox.exists()).toBe(false);
+      expect(inputBox.exists()).toBe(true);
     });
 
     test("submit button does not show", () => {
       const submitButton = findByTestAttr(wrapper, "submit-button");
-      expect(submitButton.exists()).toBe(false);
+      expect(submitButton.exists()).toBe(true);
     });
-
   });
 
-  describe("success is false", () => {
-
-    let wrapper: ShallowWrapper;
+  describe("success is true", () => {
+    let wrapper: ReactWrapper;
     beforeEach(() => {
-      wrapper = setup(false);
+      wrapper = setup({ success: true });
     });
 
     test("renders without error", () => {
@@ -52,31 +57,25 @@ describe("render", () => {
 
     test("input box shows", () => {
       const inputBox = findByTestAttr(wrapper, "input-box");
-      expect(inputBox.exists()).toBe(true);
+      expect(inputBox.exists()).toBe(false);
     });
 
     test("submit button shows", () => {
       const submitButton = findByTestAttr(wrapper, "submit-button");
-      expect(submitButton.exists()).toBe(true);
+      expect(submitButton.exists()).toBe(false);
     });
-
   });
 });
 
 describe("state controlled input field", () => {
   let mockSetCurrentGuess: jest.Mock = jest.fn();
-  let wrapper: ShallowWrapper;
-  let originalUseState: ComponentState;
+  let wrapper: ReactWrapper;
   beforeEach(() => {
     mockSetCurrentGuess.mockClear();
-    originalUseState = React.useState;
     React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
-    wrapper = setup();
+    wrapper = setup({ success: false });
   });
 
-  afterEach(() => {
-    React.useState = originalUseState;
-  });
   test("state updates with value of input box upon change", () => {
     const inputBox = findByTestAttr(wrapper, "input-box");
     const mockEvent = { target: { value: "train" } };
@@ -86,6 +85,7 @@ describe("state controlled input field", () => {
 
   test("field is cleared upon submit button click", () => {
     const submitButton = findByTestAttr(wrapper, "submit-button");
+    expect(submitButton.exists()).toBe(true);
     submitButton.simulate("click", { preventDefault() {} });
     expect(mockSetCurrentGuess).toHaveBeenCalledWith("");
   });

@@ -1,14 +1,20 @@
 import { mount } from "enzyme";
-import { findByTestAttr } from "../test/testUtils";
+import { findByTestAttr, storeFactory } from "../test/testUtils";
 import App from "./App";
 import { getSecretWord as mockGetSecretWord } from "./actions";
-import { mocked } from 'ts-jest/utils';
+import { mocked } from "ts-jest/utils";
+import { Provider } from "react-redux";
 //activate global mock
 jest.mock("./actions");
 
 const setup = () => {
+  const store = storeFactory();
   //use mount, because useEffect is not called on shallow
-  return mount(<App />);
+  return mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 };
 
 test("renders without error", () => {

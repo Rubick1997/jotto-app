@@ -1,12 +1,12 @@
 import React from "react";
 import { TextField, Button } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import { InputType } from "./types";
+import { RootState } from "./reducers";
 
-function Input({
-  success,
-  secretWord,
-}: InputType) {
+function Input({ secretWord }: InputType) {
   const [currentGuess, setCurrentGuess] = React.useState("");
+  const success = useSelector((state: RootState) => state.success);
 
   if (success) {
     return <div data-test="component-input" />;
@@ -16,13 +16,14 @@ function Input({
     <div data-test="component-input">
       <form action="">
         <TextField
-          label="type a word"
-          data-test="input-box"
+          label="Type a word"
+          inputProps={{
+            "data-test": "input-box",
+          }}
           value={currentGuess}
           onChange={(event) => setCurrentGuess(event.target.value)}
         />
         <Button
-          data-test="submit-button"
           variant="contained"
           color="primary"
           onClick={(event) => {
@@ -30,7 +31,7 @@ function Input({
             setCurrentGuess("");
           }}
         >
-          Search
+          <div data-test="submit-button">Search</div>
         </Button>
       </form>
     </div>
