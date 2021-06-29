@@ -8,7 +8,7 @@ export const actionTypes = {
   SET_SECRET_WORD: "SET_SECRET_WORD",
 };
 
-export const guessWord = (guessedWord: string) => {
+export const guessWord:Function = (guessedWord: string) => {
   return function (dispatch: Dispatch<any>, getState: any) {
     const secretWord = getState().secretWord;
     const letterMatchCount = getLetterMatchCount(guessedWord, secretWord);
@@ -24,11 +24,11 @@ export const guessWord = (guessedWord: string) => {
   };
 };
 
-export const getSecretWord:Function = () => {
+export const getSecretWord:Function = ()=> {
   //return response from server
   //write actuall action in Redux/contet sections
   return function (dispatch:Dispatch<any>) {
-    return axios.get("http://localhost:3030").then((response) => {
+    return axios.get("http://localhost:3001").then((response) => {
       dispatch({ type: actionTypes.SET_SECRET_WORD, payload: response.data });
     });
   };

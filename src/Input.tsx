@@ -2,11 +2,10 @@ import React from "react";
 import { TextField, Button } from "@material-ui/core";
 import { useAppDispatch } from "./store";
 import { useSelector } from "react-redux";
-import { InputType } from "./types";
 import { RootState } from "./reducers";
 import { guessWord } from "./actions";
 
-function Input({ secretWord }: InputType) {
+function Input() {
   const dispatch = useAppDispatch();
   const [currentGuess, setCurrentGuess] = React.useState("");
   const success = useSelector((state: RootState) => state.success);
@@ -15,9 +14,17 @@ function Input({ secretWord }: InputType) {
     return <div data-test="component-input" />;
   }
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      dispatch(guessWord(currentGuess));
+      setCurrentGuess("");
+    }
+  };
+
   return (
     <div data-test="component-input">
-      <form action="">
+      <form>
         <TextField
           label="type a guess"
           inputProps={{
@@ -25,6 +32,7 @@ function Input({ secretWord }: InputType) {
           }}
           value={currentGuess}
           onChange={(event) => setCurrentGuess(event.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <Button
           variant="contained"

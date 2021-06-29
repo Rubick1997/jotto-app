@@ -10,7 +10,7 @@ function Congrats({ success }: CongratsType) {
           <Chip
             data-test="congrats-message"
             label="Congratulations! You guessed the world!"
-            style={{ backgroundColor: "green" }}
+            style={{ backgroundColor: "green", color: "white" }}
           />
         </span>
       </div>
