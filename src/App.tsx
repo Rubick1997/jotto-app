@@ -7,14 +7,16 @@ import Input from "./Input";
 import { getSecretWord } from "./actions";
 import { useSelector } from "react-redux";
 import { RootState } from "./reducers";
+import { useAppDispatch } from "./store";
 
 function App() {
   const success = useSelector((state: RootState) => state.success);
   const guessedWords = useSelector((state: RootState) => state.guessedWords);
-  const secretWord = "titans";
+  const secretWord = useSelector((state: RootState) => state.secretWord);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getSecretWord();
+    dispatch(getSecretWord());
   }, []);
 
   return (
