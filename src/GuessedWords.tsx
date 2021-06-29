@@ -24,10 +24,10 @@ const StyledTableCell = withStyles((theme: Theme) =>
 
 function GuessedWords(props: GuessedWordsType) {
   const guessedWordsRows = props.guessedWords.map((word, index) => (
-    <TableRow key={index} data-test="guessed-word">
+    <tr key={index} data-test="guessed-word">
       <TableCell>{word.guessedWord}</TableCell>
       <TableCell>{word.letterMatchCount}</TableCell>
-    </TableRow>
+    </tr>
   ));
 
   const contents =
@@ -47,6 +47,8 @@ function GuessedWords(props: GuessedWordsType) {
         </Table>
       </TableContainer>
     );
+
+    
 
   return <div data-test="component-guessed-words">{contents}</div>;
 }

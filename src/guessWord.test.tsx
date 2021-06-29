@@ -1,12 +1,21 @@
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
+import { Provider } from "react-redux";
 
 import App from "./App";
-import { findByTestAttr } from "../test/testUtils";
+import { findByTestAttr, storeFactory } from "../test/testUtils";
 
-const setup = (state = {}) => {
+//activate global mock
+jest.mock("./actions");
+
+const setup = (initialState = {}) => {
   //apply state
-  const wrapper = mount(<App />);
+  const store = storeFactory(initialState);
+  const wrapper = mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 
   //add value to input box
   const inputBox = findByTestAttr(wrapper, "input-box");
@@ -19,11 +28,7 @@ const setup = (state = {}) => {
   return wrapper;
 };
 
-describe('invalid word guessed',() => {
-  test.todo("guessedWords table does not get another row")
-} )
-
-describe.skip("no words guessed", () => {
+describe("no words guessed", () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
@@ -40,7 +45,7 @@ describe.skip("no words guessed", () => {
   });
 });
 
-describe.skip("some words guessed", () => {
+describe("some words guessed", () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
@@ -57,7 +62,7 @@ describe.skip("some words guessed", () => {
   });
 });
 
-describe.skip("guess secret word", () => {
+describe("guess secret word", () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
@@ -83,11 +88,11 @@ describe.skip("guess secret word", () => {
     expect(congrats.text().length).toBeGreaterThan(0);
   });
 
-  test("does not display input component contents",() => {
-    const inputBox = findByTestAttr(wrapper,"input-box");
+  test("does not display input component contents", () => {
+    const inputBox = findByTestAttr(wrapper, "input-box");
     expect(inputBox.exists()).toBe(false);
 
     const submitButton = findByTestAttr(wrapper, "submit-button");
-    expect(submitButton.exists()).toBe(false)
-  } )
+    expect(submitButton.exists()).toBe(false);
+  });
 });
