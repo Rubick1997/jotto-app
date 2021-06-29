@@ -1,14 +1,15 @@
 import axios from "axios";
-import { Dispatch } from "react";
 import { getLetterMatchCount } from "../helpers";
+import { AppDispatch } from "../store";
 
 export const actionTypes = {
   CORRECT_GUESS: "CORRECT_GUESS",
   GUESS_WORD: "GUESS_WORD",
+  SET_SECRET_WORD: "SET_SECRET_WORD",
 };
 
 export const guessWord = (guessedWord: string) => {
-  return function (dispatch: Dispatch<any>, getState: any) {
+  return function (dispatch: AppDispatch, getState: any) {
     const secretWord = getState().secretWord;
     const letterMatchCount = getLetterMatchCount(guessedWord, secretWord);
 
@@ -26,5 +27,9 @@ export const guessWord = (guessedWord: string) => {
 export const getSecretWord = () => {
   //return response from server
   //write actuall action in Redux/contet sections
-  return axios.get("http://localhost:3030").then((response) => response.data);
+  return function (dispatch: AppDispatch) {
+    return axios.get("http://localhost:3030").then((response) => {
+      dispatch({ type: actionTypes.SET_SECRET_WORD, payload: response.data });
+    });
+  };
 };

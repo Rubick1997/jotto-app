@@ -1,12 +1,13 @@
 import React from "react";
 import { TextField, Button } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch } from "./store";
+import { useSelector } from "react-redux";
 import { InputType } from "./types";
 import { RootState } from "./reducers";
 import { guessWord } from "./actions";
 
 function Input({ secretWord }: InputType) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [currentGuess, setCurrentGuess] = React.useState("");
   const success = useSelector((state: RootState) => state.success);
 
@@ -30,13 +31,11 @@ function Input({ secretWord }: InputType) {
           color="primary"
           onClick={(event) => {
             event.preventDefault();
-            dispatch(guessWord(currentGuess))
+            dispatch(guessWord(currentGuess));
             setCurrentGuess("");
           }}
         >
-          <div data-test="submit-button">
-            Search
-          </div>
+          <div data-test="submit-button">Search</div>
         </Button>
       </form>
     </div>
