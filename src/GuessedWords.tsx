@@ -9,6 +9,7 @@ import {
   TableRow,
   TableCell,
 } from "@material-ui/core";
+import TotalGuesses from "./TotalGuesses";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -23,8 +24,11 @@ const StyledTableCell = withStyles((theme: Theme) =>
 )(TableCell);
 
 function GuessedWords(props: GuessedWordsType) {
+  const guessedCount = props.guessedWords.length;
+
   const guessedWordsRows = props.guessedWords.map((word, index) => (
     <tr key={index} data-test="guessed-word">
+      <TableCell>{index + 1}</TableCell>
       <TableCell>{word.guessedWord}</TableCell>
       <TableCell>{word.letterMatchCount}</TableCell>
     </tr>
@@ -39,16 +43,16 @@ function GuessedWords(props: GuessedWordsType) {
         <Table>
           <TableHead>
             <TableRow>
+              <StyledTableCell>#</StyledTableCell>
               <StyledTableCell>Guess</StyledTableCell>
               <StyledTableCell>Matching Letters</StyledTableCell>
             </TableRow>
           </TableHead>
           <tbody>{guessedWordsRows}</tbody>
         </Table>
+        <TotalGuesses guessedCount={guessedCount} />
       </TableContainer>
     );
-
-    
 
   return <div data-test="component-guessed-words">{contents}</div>;
 }

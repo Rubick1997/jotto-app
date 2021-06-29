@@ -91,8 +91,5 @@ describe("guess secret word", () => {
   test("does not display input component contents", () => {
     const inputBox = findByTestAttr(wrapper, "input-box");
     expect(inputBox.exists()).toBe(false);
-
-    const submitButton = findByTestAttr(wrapper, "submit-button");
-    expect(submitButton.exists()).toBe(false);
   });
 });
